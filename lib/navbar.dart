@@ -17,7 +17,7 @@ class Navbar extends StatelessWidget {
           UserAccountsDrawerHeader(
           accountName: const Text("Mayerly"),
           accountEmail: const Text("mml.munoz@yavirac.edu.ec"),
-          currentAccountPicture: CircleAvatar(child: ClipOval(child: Image.asset("src/images/4.avif"),),),
+          currentAccountPicture: CircleAvatar(child: ClipOval(child: Image.asset('images/4.jpg'),),),
           ),
           ListTile(
             leading: const Icon(Icons.home),
