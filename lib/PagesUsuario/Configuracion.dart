@@ -4,7 +4,7 @@ import 'package:fluttertienda_app/PagesUsuario/Perfil.dart';
 import 'package:fluttertienda_app/Servicios/firebaseservice.dart'; 
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -17,6 +17,30 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _registerUser() async {
+    if (_nombreController.text.isEmpty ||
+        _usuarioController.text.isEmpty ||
+        _apellidoController.text.isEmpty ||
+        _passwordController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Por favor, completa todos los campos.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     var user = {
       'Nombre': _nombreController.text,
       'Usuario': _usuarioController.text,
@@ -24,28 +48,45 @@ class _RegisterPageState extends State<RegisterPage> {
       'Contraseña': _passwordController.text,
     };
 
-
-    await RegisterUsuario(user);
-
-  
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()), 
-    );
+    try {
+      await RegisterUsuario(user);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Hubo un error al registrar el usuario. Inténtalo de nuevo más tarde.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         title: const Text('Registro del Usuario'),
         backgroundColor: const Color.fromARGB(255, 146, 176, 211),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), 
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) =>  HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),

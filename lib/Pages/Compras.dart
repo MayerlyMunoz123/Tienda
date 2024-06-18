@@ -96,6 +96,7 @@ class _HomeProductosState extends State<HomeProductos> {
   }
 
   Widget _buildCrearProductoDialog() {
+    final _formKey = GlobalKey<FormState>();
     final TextEditingController nombreController = TextEditingController();
     final TextEditingController descripcionController = TextEditingController();
     final TextEditingController imageUrlController = TextEditingController();
@@ -103,27 +104,61 @@ class _HomeProductosState extends State<HomeProductos> {
 
     return AlertDialog(
       title: const Text('Crear Producto'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: nombreController,
-            decoration: const InputDecoration(labelText: 'Nombre'),
-          ),
-          TextField(
-            controller: descripcionController,
-            decoration: const InputDecoration(labelText: 'Descripción'),
-          ),
-          TextField(
-            controller: imageUrlController,
-            decoration: const InputDecoration(labelText: 'URL de Imagen'),
-          ),
-          TextField(
-            controller: precioController,
-            decoration: const InputDecoration(labelText: 'Precio'),
-            keyboardType: TextInputType.number,
-          ),
-        ],
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: nombreController,
+              decoration: const InputDecoration(labelText: 'Nombre'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un nombre';
+                }
+                if (RegExp(r'\d').hasMatch(value)) {
+                  return 'El nombre no debe contener números';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: descripcionController,
+              decoration: const InputDecoration(labelText: 'Descripción'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese una descripción';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: imageUrlController,
+              decoration: const InputDecoration(labelText: 'URL de Imagen'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese una URL de imagen';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: precioController,
+              decoration: const InputDecoration(labelText: 'Precio'),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un precio';
+                }
+                final double? precio = double.tryParse(value);
+                if (precio == null || precio <= 0) {
+                  return 'Por favor ingrese un precio válido mayor a 0';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -134,14 +169,16 @@ class _HomeProductosState extends State<HomeProductos> {
         ),
         TextButton(
           onPressed: () async {
-            await _firebaseService.agregarProducto({
-              'nombre': nombreController.text,
-              'descripcion': descripcionController.text,
-              'imageUrl': imageUrlController.text,
-              'precio': double.parse(precioController.text),
-            });
-            Navigator.of(context).pop();
-            setState(() {}); 
+            if (_formKey.currentState!.validate()) {
+              await _firebaseService.agregarProducto({
+                'nombre': nombreController.text,
+                'descripcion': descripcionController.text,
+                'imageUrl': imageUrlController.text,
+                'precio': double.parse(precioController.text),
+              });
+              Navigator.of(context).pop();
+              setState(() {}); 
+            }
           },
           child: const Text('Crear'),
         ),
@@ -150,6 +187,7 @@ class _HomeProductosState extends State<HomeProductos> {
   }
 
   Widget _buildEditarProductoDialog(Map<String, dynamic> producto) {
+    final _formKey = GlobalKey<FormState>();
     final TextEditingController nombreController =
         TextEditingController(text: producto["nombre"]);
     final TextEditingController descripcionController =
@@ -160,48 +198,82 @@ class _HomeProductosState extends State<HomeProductos> {
         TextEditingController(text: producto["precio"].toString());
 
     return AlertDialog(
-      title: const Text('Editar Producto'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: nombreController,
-            decoration: const InputDecoration(labelText: 'Nombre'),
-            onChanged: (value) {
-              setState(() {
-                producto["nombre"] = value; 
-              });
-            },
-          ),
-          TextField(
-            controller: descripcionController,
-            decoration: const InputDecoration(labelText: 'Descripción'),
-            onChanged: (value) {
-              setState(() {
-                producto["descripcion"] = value; 
-              });
-            },
-          ),
-          TextField(
-            controller: imageUrlController,
-            decoration: const InputDecoration(labelText: 'URL de Imagen'),
-            onChanged: (value) {
-              setState(() {
-                producto["imageUrl"] = value; 
-              });
-            },
-          ),
-          TextField(
-            controller: precioController,
-            decoration: const InputDecoration(labelText: 'Precio'),
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              setState(() {
-                producto["precio"] = double.parse(value); 
-              });
-            },
-          ),
-        ],
+      title: const Text('Editar Estilo'),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: nombreController,
+              decoration: const InputDecoration(labelText: 'Nombre'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un nombre';
+                }
+                if (RegExp(r'\d').hasMatch(value)) {
+                  return 'El nombre no debe contener números';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  producto["nombre"] = value; 
+                });
+              },
+            ),
+            TextFormField(
+              controller: descripcionController,
+              decoration: const InputDecoration(labelText: 'Descripción'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese una descripción';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  producto["descripcion"] = value; 
+                });
+              },
+            ),
+            TextFormField(
+              controller: imageUrlController,
+              decoration: const InputDecoration(labelText: 'URL de Imagen'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese una URL de imagen';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  producto["imageUrl"] = value; 
+                });
+              },
+            ),
+            TextFormField(
+              controller: precioController,
+              decoration: const InputDecoration(labelText: 'Precio'),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un precio';
+                }
+                final double? precio = double.tryParse(value);
+                if (precio == null || precio <= 0) {
+                  return 'Por favor ingrese un precio válido mayor a 0';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  producto["precio"] = double.parse(value); 
+                });
+              },
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -212,14 +284,16 @@ class _HomeProductosState extends State<HomeProductos> {
         ),
         TextButton(
           onPressed: () async {
-            await _firebaseService.actualizarProducto(producto["id"], {
-              'nombre': nombreController.text,
-              'descripcion': descripcionController.text,
-              'imageUrl': imageUrlController.text,
-              'precio': double.parse(precioController.text),
-            });
-            Navigator.of(context).pop();
-            setState(() {}); 
+            if (_formKey.currentState!.validate()) {
+              await _firebaseService.actualizarProducto(producto["id"], {
+                'nombre': nombreController.text,
+                'descripcion': descripcionController.text,
+                'imageUrl': imageUrlController.text,
+                'precio': double.parse(precioController.text),
+              });
+              Navigator.of(context).pop();
+              setState(() {}); 
+            }
           },
           child: const Text('Actualizar'),
         ),

@@ -8,10 +8,10 @@ class DescripcionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Descripción'),
+        title: const Text('Bienvenidos'),
         backgroundColor: Colors.teal,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), 
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -22,7 +22,11 @@ class DescripcionPage extends StatelessWidget {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.lightBlueAccent,
+          gradient: LinearGradient(
+            colors: [Colors.teal, Colors.lightBlueAccent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Center(
           child: Container(
@@ -40,7 +44,7 @@ class DescripcionPage extends StatelessWidget {
               ],
             ),
             child: const Text(
-              'Proyecto enfocado en una tienda de ropa de segunda mano. Aquí podrás encontrar ropa que aún puede ser utilizada.',
+              '¡Bienvenidos al sitio de ayuda más intuitivo y emocionante! Aquí estamos para inspirarte y ayudarte a encontrar tu estilo único. Explora nuestras ideas de outfits y descubre cómo puedes lucir increíble en cualquier ocasión.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18.0,

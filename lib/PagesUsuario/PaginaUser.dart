@@ -109,7 +109,7 @@ class _UserNavbarState extends State<UserNavbar> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            '¡Bienvenidos al sitio de compras más intuitivo y emocionante!',
+            '¡Bienvenidos al sitio de ayuda más intuitivo y emocionante! Aquí estamos para inspirarte con ideas de outfits que te harán lucir increíble en cualquier ocasión.',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
@@ -135,7 +135,7 @@ class _UserNavbarState extends State<UserNavbar> {
             },
           ),
           _buildDrawerItem(
-            text: 'Compras',
+            text: 'PonteEstilo',
             onTap: () {
               Navigator.pushReplacement(
                 context,

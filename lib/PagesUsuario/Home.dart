@@ -20,49 +20,49 @@ class HomePage extends StatelessWidget {
 
   static const List<Map<String, dynamic>> products = [
     {
-      'name': 'Producto 1',
+      'name': 'Vestido',
       'price': '\$50',
-      'description': 'Descripción del Producto 1',
+      'description': 'Vestido blanco con puntitos negros',
     },
     {
-      'name': 'Producto 2',
+      'name': 'Camison',
       'price': '\$70',
-      'description': 'Descripción del Producto 2',
+      'description': 'Camison muy comodo para cualquier ocasión ',
     },
    {
-      'name': 'Producto 3',
+      'name': 'Vestido Fire',
       'price': '\$50',
-      'description': 'Descripción del Producto 1',
+      'description': 'Vestido amarillo elegante',
     },
     {
-      'name': 'Producto 4',
+      'name': 'Vestido OnSun',
       'price': '\$70',
-      'description': 'Descripción del Producto 2',
+      'description': 'Vestido Elegante para cualquier ocasión ',
     },
     {
-      'name': 'Producto 5',
+      'name': 'Camison styleverano',
       'price': '\$50',
-      'description': 'Descripción del Producto 1',
+      'description': 'Camison Comodo para eventos especiales',
     },
     {
-      'name': 'Producto 6',
+      'name': 'Vestido negro',
       'price': '\$70',
-      'description': 'Descripción del Producto 2',
+      'description': 'Vestido negro con puntitos',
     },
     {
-      'name': 'Producto 7',
+      'name': 'Style90',
       'price': '\$50',
-      'description': 'Descripción del Producto 1',
+      'description': 'Camison color metalico evento de noche ',
     },
     {
-      'name': 'Producto 8',
+      'name': 'Camison this',
       'price': '\$70',
-      'description': 'Descripción del Producto 2',
+      'description': 'Camison estilo formal para cualquier ocasión',
     },
     {
-      'name': 'Producto 9',
+      'name': 'Vestido llamas',
       'price': '\$50',
-      'description': 'Descripción del Producto 1',
+      'description': 'Excelente vestido rojo cualquier ocasión',
     },
   
   ];
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Página de Inicio'),
+        title: const Text('Ponle Estilo a tu vida'),
         actions: <Widget>[
           TextButton(
             onPressed: () {
