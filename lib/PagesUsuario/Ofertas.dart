@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertienda_app/PagesUsuario/PaginaUser.dart';
 
 class DescripcionPage extends StatelessWidget {
   const DescripcionPage({super.key});
@@ -8,19 +9,28 @@ class DescripcionPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Descripción'),
-        backgroundColor: Colors.teal, 
+        backgroundColor: Colors.teal,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), 
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const UserNavbar()),
+            );
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.lightBlueAccent, 
+          color: Colors.lightBlueAccent,
         ),
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            margin: const EdgeInsets.symmetric(horizontal: 30.0), 
+            margin: const EdgeInsets.symmetric(horizontal: 30.0),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.9),
-              borderRadius: BorderRadius.circular(15.0), 
+              borderRadius: BorderRadius.circular(15.0),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,

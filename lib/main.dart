@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertienda_app/Configuracion.dart';
-import 'package:fluttertienda_app/Perfil.dart';
-import 'package:fluttertienda_app/navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertienda_app/PagesUsuario/Home.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -12,53 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Menu App',
-      home: Scaffold(
-        drawer: const Navbar(),
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-          backgroundColor: Colors.amber,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Pagina inicial',
-                style: TextStyle(fontSize: 45.0),
-              ),
-              Builder(
-                builder: (BuildContext context) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PerfilPage()),
-                      );
-                    },
-                    child: const Text('Ir a Perfil'),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-              Builder(
-                builder: (BuildContext context) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const RegisterPage()),
-                      );
-                    },
-                    child: const Text('Registrate'),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      home: HomePage(),
     );
   }
 }
